@@ -36,11 +36,9 @@ function start() {
             choices: [
                 "View All Employees",
                 "View Employees by Department",
-                "View Employees by Manager",
                 "Add Employee",
                 "Remove Employee",
                 "Update Employee Role",
-                "Update Employee Manager",
                 "View Departments",
                 "Add Department",
                 "Remove Department",
@@ -50,15 +48,11 @@ function start() {
                 "EXIT"]
         })
         .then(function (answer) {
-            // based on their answer, either call the bid or the post functions
             if (answer.addToTracker === "View All Employees") {
                 viewAllEmployees();
             }
             else if (answer.addToTracker === "View Employees by Department") {
-                viewEmployeesByDepartment()
-            }
-            else if (answer.addToTracker === "View Employees by Manager") {
-                viewEmployeesByManger();
+                viewEmployeesByDepartment();
             }
             else if (answer.addToTracker === "Add Employee") {
                 addEmployee();
@@ -69,17 +63,21 @@ function start() {
             else if (answer.addToTracker === "Update Employee Role") {
                 updateEmployeeRole();
             }
-            else if (answer.addToTracker === "Update Emploee Manager") {
-                updateEmployeeManager();
+            else if (answer.addToTracker === "View Departments") {
+                viewDepartments();
             }
-            else if (answer.addToTracker === "Update Emploee Manager") {
-                updateEmployeeManager();
+            else if (answer.addToTracker === "Add Department") {
+                addDepartments();
             }
-
-
-        } else {
-            connection.end();
-        }
+            else if (answer.addToTracker === "View Roles") {
+                viewRoles();
+            }
+            else if (answer.addToTracker === "Add Role") {
+                addRole();
+            }
+            else {
+                connection.end();
+            }
         });
 }
 
@@ -99,14 +97,17 @@ LEFT JOIN employee employee2 ON  employee2.id=employee.manager_id;
 
 //view employees by department
 function viewEmployeesByDepartment() {
-    inquirer.prompt(
-        [
-            {
-                type: "input",
-                message: "What department do you want to add?",
-                name: "departmentName"
-            }
-        ]
+    connection.query(` `, function (err, data) {
+        console.table(data)
+        start()
+    })
+}
+
+function viewEmployeesByManger() {
+    connection.query(` `, function (err, data) {
+        console.table(data)
+        start()
+    });
     ).then(function (input) {
         var statement = connection.query("INSERT INTO department(dep_name) VALUES (?)", [input.departmentName], function (err) {
             start()
