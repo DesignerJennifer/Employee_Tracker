@@ -97,23 +97,33 @@ LEFT JOIN employee employee2 ON  employee2.id=employee.manager_id;
 
 //view employees by department
 function viewEmployeesByDepartment() {
-    connection.query(` `, function (err, data) {
-        console.table(data)
-        start()
-    })
-}
-
-function viewEmployeesByManger() {
-    connection.query(` `, function (err, data) {
-        console.table(data)
-        start()
-    });
-    ).then(function (input) {
-        var statement = connection.query("INSERT INTO department(dep_name) VALUES (?)", [input.departmentName], function (err) {
+    connection.query(`
+    SELECT employee.first_name, employee.last_name, department.dep_name
+    FROM employee
+    LEFT JOIN department
+    ON employee.id=department.id
+    ORDER BY department.dep_name;
+    `,
+        function (err, data) {
+            console.table(data)
             start()
         })
-        console.log(statement.sql)
-    })
+}
+
+function addEmployee() {
+    inquirer
+        .prompt({
+            name: "addNewEmployee",
+            type: "input",
+            message: "First Name:",
+            first_:
+    });
+    ).then(function (input) {
+                var statement = connection.query("INSERT INTO department(dep_name) VALUES (?)", [input.departmentName], function (err) {
+                    start()
+                })
+                console.log(statement.sql)
+            })
 
 }
 //view employees by manager
