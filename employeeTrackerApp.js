@@ -98,11 +98,9 @@ LEFT JOIN employee employee2 ON  employee2.id=employee.manager_id;
 //view employees by department
 function viewEmployeesByDepartment() {
     connection.query(`
-    SELECT employee.first_name, employee.last_name, department.dep_name
-    FROM employee
-    LEFT JOIN department
-    ON employee.id=department.id
-    ORDER BY department.dep_name;
+    SELECT employee.*, role.department_id, department.dep_name FROM employee
+JOIN role ON employee.role_id = role.id 
+JOIN department ON department_id = department.id;
     `,
         function (err, data) {
             console.table(data)
@@ -115,7 +113,7 @@ function addEmployee() {
         .prompt({
             name: "addNewEmployee",
             type: "input",
-            message: "First Name:",
+            message: "First Name.",
             first_:
     });
     ).then(function (input) {
