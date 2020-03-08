@@ -32,26 +32,23 @@ function start() {
         .prompt({
             name: "addToTracker",
             type: "list",
-            message: "What do you want to do?",
+            message: "What would you like to do?",
             choices: [
-                "View All Employees",
-                "View Employees by Department",
-                "Add Employee",
-                "Remove Employee",
-                "Update Employee Role",
-                "View Departments",
-                "Add Department",
-                "Remove Department",
-                "View Roles",
-                "Add Role",
-                "Remove Role",
-                "EXIT"]
+                "View all employees",
+                "View all departments",
+                "View all roles",
+                "Add a department",
+                "Add a role",
+                "Add an employee",
+                "Update employee role",
+                "Exit"
+            ]
         })
         .then(function (answer) {
-            if (answer.addToTracker === "View All Employees") {
+            if (answer.addToTracker === "View all employees") {
                 viewAllEmployees();
             }
-            else if (answer.addToTracker === "View Employees by Department") {
+            else if (answer.addToTracker === "View all departments") {
                 viewEmployeesByDepartment();
             }
             else if (answer.addToTracker === "Add Employee") {
@@ -111,17 +108,34 @@ JOIN department ON department_id = department.id;
 function addEmployee() {
     inquirer
         .prompt({
-            name: "addNewEmployee",
+            [
+                name: "addNewEmployee",
             type: "input",
-            message: "First Name.",
-            first_:
-    });
+            message: "First Name:",
+            first_name: "first",
+            last_name: "last"
+            ],
+            [
+                name: "addNewEmplyRole"
+            type: "inputf"
+            message: ",
+            title: "title",
+            salary: "salary"
+        });
     ).then(function (input) {
-                var statement = connection.query("INSERT INTO department(dep_name) VALUES (?)", [input.departmentName], function (err) {
-                    start()
-                })
-                console.log(statement.sql)
+            var statement = connection.query(
+                INSERT INTO employee(role_id, first_name, last_name) VALUES(2, "Karen", "Smith");
+            INSERT INTO department(dep_name) VALUES("Engineering");
+            INSERT INTO role(title, salary) VALUES("Engineer", 200000);
+
+
+
+
+            "INSERT INTO department(dep_name) VALUES (?)", [input.departmentName], function (err) {
+                start()
             })
+    console.log(statement.sql)
+})
 
 }
 //view employees by manager
