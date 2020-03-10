@@ -49,6 +49,15 @@ function start() {
                 viewAllEmployees();
             }
             else if (answer.addToTracker === "View all departments") {
+                viewDepartments();
+            }
+            else if (answer.addToTracker === "View all roles") {
+                viewRoles();
+            }
+            else if (answer.addToTracker === "Add a department") {
+                addDepartment();
+            }
+            else if (answer.addToTracker === "View all empoyees by department") {
                 viewEmployeesByDepartment();
             }
             else if (answer.addToTracker === "Add Employee") {
@@ -59,18 +68,6 @@ function start() {
             }
             else if (answer.addToTracker === "Update Employee Role") {
                 updateEmployeeRole();
-            }
-            else if (answer.addToTracker === "View Departments") {
-                viewDepartments();
-            }
-            else if (answer.addToTracker === "Add Department") {
-                addDepartments();
-            }
-            else if (answer.addToTracker === "View Roles") {
-                viewRoles();
-            }
-            else if (answer.addToTracker === "Add Role") {
-                addRole();
             }
             else {
                 connection.end();
@@ -92,53 +89,83 @@ LEFT JOIN employee employee2 ON  employee2.id=employee.manager_id;
     })
 }
 
-//view employees by department
-function viewEmployeesByDepartment() {
-    connection.query(`
-    SELECT employee.*, role.department_id, department.dep_name FROM employee
-JOIN role ON employee.role_id = role.id 
-JOIN department ON department_id = department.id;
-    `,
-        function (err, data) {
-            console.table(data)
-            start()
-        })
+function viewDepartments() {
+    connection.query(`SELECT * FROM employees_db.department;`, function (err, data) {
+        console.table(data)
+        start()
+    })
 }
 
-function addEmployee() {
-    inquirer
-        .prompt({
-            [
-                name: "addNewEmployee",
-            type: "input",
-            message: "First Name:",
-            first_name: "first",
-            last_name: "last"
-            ],
-            [
-                name: "addNewEmplyRole"
-            type: "inputf"
-            message: ",
-            title: "title",
-            salary: "salary"
-        });
-    ).then(function (input) {
-            var statement = connection.query(
-                INSERT INTO employee(role_id, first_name, last_name) VALUES(2, "Karen", "Smith");
-            INSERT INTO department(dep_name) VALUES("Engineering");
-            INSERT INTO role(title, salary) VALUES("Engineer", 200000);
-
-
-
-
-            "INSERT INTO department(dep_name) VALUES (?)", [input.departmentName], function (err) {
-                start()
-            })
-    console.log(statement.sql)
-})
-
+function viewRoles() {
+    connection.query(`SELECT title FROM role;`, function (err, data) {
+        console.table(data)
+        start()
+    })
 }
-//view employees by manager
-function viewEmployeesByManger() {
 
+function addDepartment() {
+    connection.query("SELECT * FROM department", function (err, res) {
+        inquirer
+            .prompt({
+                name: "new_dep",
+                type: "input",
+                message: "What department would you like to add?"
+            }).then(function (result) {
+                connection.query("INSERT INTO department (dep_name) VALUES ?"
+                    function (err, data) {
+                        console.table("Department Created")
+                        start();
+                    });
+            });
+    });
 }
+// //view employees by department
+// function viewEmployeesByDepartment() {
+//     connection.query(`
+//     SELECT employee.*, role.department_id, department.dep_name FROM employee
+// JOIN role ON employee.role_id = role.id 
+// JOIN department ON department_id = department.id;
+//     `,
+//         function (err, data) {
+//             console.table(data)
+//             start()
+//         })
+// }
+
+// // function addEmployee() {
+// //     inquirer
+// //         .prompt({
+// //             [
+// //                 name: "addNewEmployee",
+// //             type: "input",
+// //             message: "First Name:",
+// //             first_name: "first",
+// //             last_name: "last"
+// //             ],
+// //             [
+// //                 name: "addNewEmplyRole"
+// //             type: "inputf"
+// //             message: ",
+// //             title: "title",
+// //             salary: "salary"
+// //         });
+// //     ).then(function (input) {
+// //             var statement = connection.query(
+// //                 INSERT INTO employee(role_id, first_name, last_name) VALUES(2, "Karen", "Smith");
+// //             INSERT INTO department(dep_name) VALUES("Engineering");
+// //             INSERT INTO role(title, salary) VALUES("Engineer", 200000);
+
+
+
+
+// //             "INSERT INTO department(dep_name) VALUES (?)", [input.departmentName], function (err) {
+// //                 start()
+// //             })
+// //     console.log(statement.sql)
+// // })
+
+// // }
+// // //view employees by manager
+// // function viewEmployeesByManger() {
+
+// // }
