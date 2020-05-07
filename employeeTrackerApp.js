@@ -88,7 +88,7 @@ LEFT JOIN employee employee2 ON  employee2.id=employee.manager_id;
         start()
     })
 }
-
+// view all departments
 function viewDepartments() {
     connection.query(`SELECT * FROM employees_db.department;`, function (err, data) {
         console.table(data)
@@ -96,6 +96,7 @@ function viewDepartments() {
     })
 }
 
+//view roles
 function viewRoles() {
     connection.query(`SELECT title FROM role;`, function (err, data) {
         console.table(data)
@@ -103,6 +104,7 @@ function viewRoles() {
     })
 }
 
+//add department
 function addDepartment() {
     connection.query("SELECT * FROM department", function (err, res) {
         inquirer
@@ -111,7 +113,7 @@ function addDepartment() {
                 type: "input",
                 message: "What department would you like to add?"
             }).then(function (result) {
-                connection.query("INSERT INTO department (dep_name) VALUES ?"
+                connection.query("INSERT INTO department (dep_name) VALUES ?",
                     function (err, data) {
                         console.table("Department Created")
                         start();
@@ -132,28 +134,27 @@ function addDepartment() {
 //         })
 // }
 
-// // function addEmployee() {
-// //     inquirer
-// //         .prompt({
-// //             [
-// //                 name: "addNewEmployee",
-// //             type: "input",
-// //             message: "First Name:",
-// //             first_name: "first",
-// //             last_name: "last"
-// //             ],
-// //             [
-// //                 name: "addNewEmplyRole"
-// //             type: "inputf"
-// //             message: ",
-// //             title: "title",
-// //             salary: "salary"
-// //         });
-// //     ).then(function (input) {
-// //             var statement = connection.query(
-// //                 INSERT INTO employee(role_id, first_name, last_name) VALUES(2, "Karen", "Smith");
-// //             INSERT INTO department(dep_name) VALUES("Engineering");
-// //             INSERT INTO role(title, salary) VALUES("Engineer", 200000);
+//add Employee
+function addEmployee() {
+    inquirer
+        .prompt({
+            name: "addNewEmployee",
+            type: "input",
+            first_name: "first",
+            last_name: "last",
+            title: "title",
+            salary: "salary"
+        }).then(function (input) {
+            var statement = connection.query(
+                "INSERT INTO employee(role_id, first_name, last_name) VALUES(2, 'Karen', 'Smith');",
+                "INSERT INTO department(dep_name) VALUES('Engineering');",
+                "INSERT INTO role(title, salary) VALUES('Engineer', 200000);",
+                function (err, data) {
+                    console.log("Employee Added!");
+                    start();
+                });
+        });
+}
 
 
 
