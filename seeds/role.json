@@ -1,0 +1,8 @@
+[{"id":1, "title":"Sales Lead", "salary":10000.0, "department_id":1},
+ {"id":2, "title":"Salesperson", "salary":80000.0, "department_id":1},
+ {"id":3, "title":"Lead Engineer", "salary":150000.0, "department_id":2},
+ {"id":4, "title":"Sofware Engineer", "salary":120000.0, "department_id":2},
+ {"id":5, "title":"Accountant", "salary":125000.0, "department_id":3},
+ {"id":6, "title":"Legal Team Lead", "salary":250000.0, "department_id":4},
+ {"id":7, "title":"Lawyer", "salary":190000.0, "department_id":4},
+ {"id":8, "title":"Engineer", "salary":200000.0, "department_id":0}]
